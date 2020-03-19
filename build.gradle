@@ -1,0 +1,70 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+	mavenCentral()
+	jcenter()
+}
+
+dependencies {
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-quartz'
+
+//	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+	compile 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	implementation 'javax.inject:javax.inject:1'
+	implementation 'org.apache.commons:commons-lang3:3.9'
+	implementation 'commons-io:commons-io:2.6'
+	//implementation "org.apache.commons:commons-pool2:2.6.2"
+	implementation 'com.google.guava:guava:28.1-jre'
+	implementation 'com.alibaba:fastjson:1.2.62'
+
+	compileOnly 'org.slf4j:slf4j-log4j12:1.7.26'
+	testCompileOnly 'org.slf4j:slf4j-log4j12:1.7.26'
+
+
+	implementation 'io.netty:netty-all:4.1.43.Final'
+
+	implementation("com.fasterxml.jackson.core:jackson-databind:2.10.2")
+	implementation("com.fasterxml.jackson.core:jackson-annotations:2.10.2")
+
+	implementation 'mysql:mysql-connector-java'
+	//implementation "org.mariadb.jdbc:mariadb-java-client:2.4.2"
+	implementation 'com.alibaba:druid-spring-boot-starter:1.1.21'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
+	implementation 'tk.mybatis:mapper-spring-boot-starter:2.1.5'
+	implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.13'
+
+	implementation("io.springfox:springfox-swagger2:2.9.2")
+	implementation("io.springfox:springfox-swagger-ui:2.9.2")
+
+}
+
+test {
+	useJUnitPlatform()
+}
