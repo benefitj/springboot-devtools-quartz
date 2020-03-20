@@ -1,6 +1,6 @@
 # springboot-devtools-quartz
 
-## 复现springboot-devtools的一个bug
+## 复现springboot-devtools bug 的 demo
 
 
 1. springboot-devtools与quartz集成导致的ApplicationContext无法获取bean实例的bug；
