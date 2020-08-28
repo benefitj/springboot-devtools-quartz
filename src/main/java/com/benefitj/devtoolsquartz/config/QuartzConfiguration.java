@@ -1,12 +1,10 @@
 package com.benefitj.devtoolsquartz.config;
 
-import com.benefitj.devtoolsquartz.quartz.DefaultQuartzProperties;
 import com.benefitj.devtoolsquartz.quartz.scheduler.DefaultSchedulerFactory;
 import com.benefitj.devtoolsquartz.quartz.scheduler.LoggingSchedulerListener;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.BeanInstantiationException;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -24,18 +22,13 @@ import java.util.Properties;
 
 @Lazy
 @EnableConfigurationProperties
-@PropertySource("classpath:/quartz.properties")
+@PropertySource("classpath:/quartz-spring.properties")
 @ConditionalOnProperty(name = "quartz.enabled")
 @Configuration
 public class QuartzConfiguration {
 
   private static final String PREFIX_SPRING = "spring.quartz.properties.";
-  private static final String PREFIX_JOBTASK = "jobtask.properties.";
 
-  @Bean
-  public DefaultQuartzProperties defaultQuartzProperties() {
-    return new DefaultQuartzProperties();
-  }
 
   @ConditionalOnMissingBean(DefaultSchedulerFactory.class)
   @Bean
@@ -44,15 +37,8 @@ public class QuartzConfiguration {
     try {
       final Properties properties = new Properties();
       final Map<String, String> map = quartzProperties.getProperties();
-      if (map.isEmpty()) {
-        DefaultQuartzProperties dqp = defaultQuartzProperties();
-        BeanUtils.copyProperties(dqp, quartzProperties);
-        dqp.getProperties().forEach((key, value) ->
-            properties.put(key.replaceFirst(PREFIX_JOBTASK, ""), value));
-      } else {
-        map.forEach((key, value) -> properties.put(
-            key.replaceFirst(PREFIX_SPRING, ""), value));
-      }
+      map.forEach((key, value) -> properties.put(
+          key.replaceFirst(PREFIX_SPRING, ""), value));
       StdSchedulerFactory factory = new StdSchedulerFactory(properties);
       return new DefaultSchedulerFactory(context, factory);
     } catch (SchedulerException e) {

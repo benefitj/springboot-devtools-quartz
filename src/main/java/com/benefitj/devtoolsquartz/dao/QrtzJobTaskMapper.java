@@ -3,7 +3,7 @@ package com.benefitj.devtoolsquartz.dao;
 import com.benefitj.core.DateFmtter;
 import com.benefitj.devtoolsquartz.quartz.task.QrtzJobTask;
 import com.benefitj.devtoolsquartz.core.BaseMapper;
-import com.benefitj.devtoolsquartz.core.Tools;
+import com.benefitj.devtoolsquartz.core.Checker;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -49,13 +49,13 @@ public interface QrtzJobTaskMapper extends BaseMapper<QrtzJobTask> {
   @Transient
   default List<QrtzJobTask> selectList(QrtzJobTask condition, Date startTime, Date endTime, boolean multiLevel) {
     final Sqls sqls = Sqls.custom();
-    Tools.checkNotNull(startTime, () -> sqls.andGreaterThanOrEqualTo("create_time", fmt(startTime)));
-    Tools.checkNotNull(endTime, () -> sqls.andLessThanOrEqualTo("create_time", fmt(endTime)));
-    Tools.checkNotBlank(condition.getTriggerType(), s -> sqls.andLike("triggerType", s));
-    Tools.checkNotBlank(condition.getJobGroup(), s -> sqls.andLike("jobGroup", s));
-    Tools.checkNotBlank(condition.getJobName(), s -> sqls.andLike("jobName", s));
-    Tools.checkNotBlank(condition.getTriggerGroup(), s -> sqls.andLike("triggerGroup", s));
-    Tools.checkNotBlank(condition.getTriggerName(), s -> sqls.andLike("triggerName", s));
+    Checker.checkNotNull(startTime, () -> sqls.andGreaterThanOrEqualTo("create_time", fmt(startTime)));
+    Checker.checkNotNull(endTime, () -> sqls.andLessThanOrEqualTo("create_time", fmt(endTime)));
+    Checker.checkNotBlank(condition.getTriggerType(), s -> sqls.andLike("triggerType", s));
+    Checker.checkNotBlank(condition.getJobGroup(), s -> sqls.andLike("jobGroup", s));
+    Checker.checkNotBlank(condition.getJobName(), s -> sqls.andLike("jobName", s));
+    Checker.checkNotBlank(condition.getTriggerGroup(), s -> sqls.andLike("triggerGroup", s));
+    Checker.checkNotBlank(condition.getTriggerName(), s -> sqls.andLike("triggerName", s));
     return selectByExample(example(sqls));
   }
 

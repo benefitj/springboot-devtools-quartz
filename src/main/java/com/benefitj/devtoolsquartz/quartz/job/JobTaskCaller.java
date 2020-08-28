@@ -22,7 +22,7 @@ public class JobTaskCaller implements Job {
       String worker = jobDataMap.getString(QrtzJobTask.KEY_WORKER);
 
       WorkerType workerType = WorkerType.of(jobDataMap.getString(QrtzJobTask.KEY_WORKER_TYPE));
-      JobWorker jobWorker = null;
+      Object jobWorker = null;
       switch (workerType) {
         case NEW_INSTANCE:
           jobWorker = classForName(worker).newInstance();
@@ -35,9 +35,13 @@ public class JobTaskCaller implements Job {
           break;
       }
       if (jobWorker != null) {
-        jobWorker.execute(context, detail, taskId);
+        if (jobWorker instanceof JobWorker) {
+          ((JobWorker)jobWorker).execute(context, detail, taskId);
+        } else {
+          logger.warn("Fail JobWorker instance: " + jobWorker.getClass());
+        }
       } else {
-        logger.warn("Not found job worker instance: " + worker);
+        logger.warn("Not found JobWorker instance: " + worker);
       }
     } catch (Exception e) {
       logger.error("throws: " + e.getMessage(), e);

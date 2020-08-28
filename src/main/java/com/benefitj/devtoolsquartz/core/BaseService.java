@@ -1,4 +1,4 @@
-package com.benefitj.devtoolsquartz.service;
+package com.benefitj.devtoolsquartz.core;
 
 import com.benefitj.devtoolsquartz.core.BaseMapper;
 import org.mybatis.spring.SqlSessionTemplate;

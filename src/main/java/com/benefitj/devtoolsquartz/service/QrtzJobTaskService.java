@@ -3,7 +3,8 @@ package com.benefitj.devtoolsquartz.service;
 import com.benefitj.core.EventLoop;
 import com.benefitj.core.IdUtils;
 import com.benefitj.core.SingletonSupplier;
-import com.benefitj.devtoolsquartz.core.Tools;
+import com.benefitj.devtoolsquartz.core.BaseService;
+import com.benefitj.devtoolsquartz.core.Checker;
 import com.benefitj.devtoolsquartz.dao.QrtzJobTaskMapper;
 import com.benefitj.devtoolsquartz.quartz.QuartzUtils;
 import com.benefitj.devtoolsquartz.quartz.job.JobType;
@@ -14,7 +15,6 @@ import com.benefitj.devtoolsquartz.quartz.task.TriggerType;
 import com.benefitj.spring.BeanHelper;
 import com.benefitj.spring.applicationevent.IApplicationReadyEventListener;
 import com.benefitj.spring.ctx.SpringCtxHolder;
-import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.CronExpression;
 import org.quartz.JobKey;
@@ -110,9 +110,9 @@ public class QrtzJobTaskService extends BaseService<QrtzJobTask, QrtzJobTaskMapp
     }
 
     // 任务ID
-    Tools.checkBlank(task.getId(), () -> task.setId(IdUtils.uuid()));
+    Checker.checkBlank(task.getId(), () -> task.setId(IdUtils.uuid()));
     // 创建时间
-    Tools.checkNull(task.getCreateTime(), () -> task.setCreateTime(new Date()));
+    Checker.checkNull(task.getCreateTime(), () -> task.setCreateTime(new Date()));
     setupJobTask(task);
     task.setActive(Boolean.TRUE);
     QuartzUtils.scheduleJob(getScheduler(), task);
@@ -141,7 +141,7 @@ public class QrtzJobTaskService extends BaseService<QrtzJobTask, QrtzJobTaskMapp
 
     // 开始时间
     long now = System.currentTimeMillis();
-    Tools.checkNull(task.getStartAt(), () -> task.setStartAt(now));
+    Checker.checkNull(task.getStartAt(), () -> task.setStartAt(now));
 
     // 调度的时间不能比当前时间更早
     if (task.getStartAt() < now) {
@@ -162,9 +162,9 @@ public class QrtzJobTaskService extends BaseService<QrtzJobTask, QrtzJobTaskMapp
     } else {
       // 验证Simple的值
       // 执行次数
-      Tools.checkNull(task.getSimpleRepeatCount(), () -> task.setSimpleRepeatCount(0));
+      Checker.checkNull(task.getSimpleRepeatCount(), () -> task.setSimpleRepeatCount(0));
       // 间隔时间
-      Tools.checkNull(task.getSimpleInterval(), () -> task.setSimpleInterval(0L));
+      Checker.checkNull(task.getSimpleInterval(), () -> task.setSimpleInterval(0L));
 
       if (task.getMisfirePolicy() == null) {
         // 默认什么都不做
@@ -177,11 +177,11 @@ public class QrtzJobTaskService extends BaseService<QrtzJobTask, QrtzJobTaskMapp
       task.setEndAt(Math.max(task.getStartAt() + 5_000, task.getEndAt()));
     }
 
-    Tools.checkNull(task.getAsync(), () -> task.setAsync(false));
-    Tools.checkNull(task.getRecovery(), () -> task.setRecovery(false));
-    Tools.checkNull(task.getPersistent(), () -> task.setPersistent(false));
-    Tools.checkNull(task.getDisallowConcurrent(), () -> task.setDisallowConcurrent(false));
-    Tools.checkNull(task.getPriority(), () -> task.setPriority(QrtzJobTask.TRIGGER_PRIORITY));
+    Checker.checkNull(task.getAsync(), () -> task.setAsync(false));
+    Checker.checkNull(task.getRecovery(), () -> task.setRecovery(false));
+    Checker.checkNull(task.getPersistent(), () -> task.setPersistent(false));
+    Checker.checkNull(task.getDisallowConcurrent(), () -> task.setDisallowConcurrent(false));
+    Checker.checkNull(task.getPriority(), () -> task.setPriority(QrtzJobTask.TRIGGER_PRIORITY));
 
     // job类型
     JobType jobType = JobType.of(task.getJobType());

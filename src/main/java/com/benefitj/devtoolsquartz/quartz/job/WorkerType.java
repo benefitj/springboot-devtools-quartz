@@ -18,7 +18,7 @@ public enum WorkerType {
    * 获取 WorkerType
    */
   public static WorkerType of(String type) {
-    if ((type != null && !type.isEmpty())) {
+    if (type != null && !type.isEmpty()) {
       for (WorkerType wt : values()) {
         if (wt.name().equalsIgnoreCase(type)) {
           return wt;
