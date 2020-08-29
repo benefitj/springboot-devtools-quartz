@@ -3,7 +3,7 @@ package com.benefitj.devtoolsquartz.quartz;
 import com.alibaba.fastjson.JSON;
 import com.benefitj.core.DateFmtter;
 import com.benefitj.devtoolsquartz.quartz.job.JobWorker;
-import com.benefitj.devtoolsquartz.quartz.task.QrtzJobTask;
+import com.benefitj.devtoolsquartz.model.QrtzJobTask;
 import com.benefitj.devtoolsquartz.service.QrtzJobTaskService;
 import com.benefitj.spring.ctx.SpringCtxHolder;
 import org.quartz.JobDataMap;

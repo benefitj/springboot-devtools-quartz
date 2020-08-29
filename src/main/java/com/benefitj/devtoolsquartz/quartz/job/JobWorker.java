@@ -6,6 +6,11 @@ import org.quartz.JobExecutionException;
 
 public interface JobWorker {
 
+  String KEY_ID = "id";
+  String KEY_JOB_DATA = "jobData";
+  String KEY_WORKER = "worker";
+  String KEY_WORKER_TYPE = "workerType";
+
   /**
    * 执行方法
    *

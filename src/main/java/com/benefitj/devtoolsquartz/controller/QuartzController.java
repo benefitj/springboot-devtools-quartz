@@ -1,7 +1,10 @@
 package com.benefitj.devtoolsquartz.controller;
 
 
-import com.benefitj.devtoolsquartz.quartz.task.QrtzJobTask;
+import com.benefitj.devtoolsquartz.model.QrtzJobTask;
+import com.benefitj.devtoolsquartz.quartz.TriggerType;
+import com.benefitj.devtoolsquartz.quartz.job.JobType;
+import com.benefitj.devtoolsquartz.quartz.job.WorkerType;
 import com.benefitj.devtoolsquartz.service.QrtzJobTaskService;
 import com.benefitj.devtoolsquartz.vo.CommonStatus;
 import com.benefitj.devtoolsquartz.vo.HttpResult;
@@ -27,6 +30,24 @@ public class QuartzController {
 
   @Autowired
   private QrtzJobTaskService qrtzService;
+
+  @ApiOperation("获取触发器类型")
+  @GetMapping("/triggerType")
+  public HttpResult<?> getTriggerType() {
+    return HttpResult.success(TriggerType.values());
+  }
+
+  @ApiOperation("获取Job类型")
+  @GetMapping("/jobType")
+  public HttpResult<?> getJobType() {
+    return HttpResult.success(JobType.values());
+  }
+
+  @ApiOperation("获取Worker类型")
+  @GetMapping("/workerType")
+  public HttpResult<?> getWorkerType() {
+    return HttpResult.success(WorkerType.values());
+  }
 
   @ApiOperation("获取Cron调度任务")
   @ApiImplicitParams({

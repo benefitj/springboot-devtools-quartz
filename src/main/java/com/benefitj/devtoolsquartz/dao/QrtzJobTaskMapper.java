@@ -1,12 +1,11 @@
 package com.benefitj.devtoolsquartz.dao;
 
 import com.benefitj.core.DateFmtter;
-import com.benefitj.devtoolsquartz.quartz.task.QrtzJobTask;
 import com.benefitj.devtoolsquartz.core.BaseMapper;
 import com.benefitj.devtoolsquartz.core.Checker;
+import com.benefitj.devtoolsquartz.model.QrtzJobTask;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 import tk.mybatis.mapper.util.Sqls;
 
 import java.beans.Transient;
@@ -25,8 +24,10 @@ public interface QrtzJobTaskMapper extends BaseMapper<QrtzJobTask> {
    * @param jobName job name
    * @return 返回出现的次数
    */
-  @Select("SELECT count(*) FROM qrtz_job_task WHERE job_name = #{jobName}")
-  int countJobName(@Param("jobName") String jobName);
+  default int countJobName(@Param("jobName") String jobName) {
+    return selectCountByExample(example(Sqls.custom()
+        .andEqualTo("jobName", jobName)));
+  }
 
   /**
    * 统计 trigger name 出现的次数
@@ -34,8 +35,10 @@ public interface QrtzJobTaskMapper extends BaseMapper<QrtzJobTask> {
    * @param triggerName trigger name
    * @return 返回出现的次数
    */
-  @Select("SELECT count(*) FROM qrtz_job_task WHERE trigger_name = #{triggerName}")
-  int countTriggerName(@Param("triggerName") String triggerName);
+  default int countTriggerName(@Param("triggerName") String triggerName) {
+    return selectCountByExample(example(Sqls.custom()
+        .andEqualTo("triggerName", triggerName)));
+  }
 
   /**
    * 查询调度任务的分页

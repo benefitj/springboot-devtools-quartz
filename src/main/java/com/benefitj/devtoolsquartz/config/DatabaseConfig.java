@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 /**
  * 数据库配置
  */
-@EntityScan("com.benefitj.devtoolsquartz.quartz.task")
+@EntityScan("com.benefitj.devtoolsquartz.model")
 @MapperScan({"com.benefitj.devtoolsquartz.dao"})
 @EnableTransactionManagement
 @Configuration

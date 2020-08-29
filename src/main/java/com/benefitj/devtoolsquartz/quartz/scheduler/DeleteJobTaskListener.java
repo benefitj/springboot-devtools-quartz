@@ -1,6 +1,6 @@
 package com.benefitj.devtoolsquartz.quartz.scheduler;
 
-import com.benefitj.devtoolsquartz.quartz.task.QrtzJobTask;
+import com.benefitj.devtoolsquartz.quartz.job.JobWorker;
 import com.benefitj.devtoolsquartz.service.QrtzJobTaskService;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.*;
@@ -54,7 +54,7 @@ public class DeleteJobTaskListener implements JobListener {
       final JobDetail jd = context.getJobDetail();
       if (nextFireTime == null && jd != null) {
         JobDataMap jdm = jd.getJobDataMap();
-        String id = jdm.getString(QrtzJobTask.KEY_ID);
+        String id = jdm.getString(JobWorker.KEY_ID);
         if (StringUtils.isNotBlank(id)) {
           // 删除JobTask
           getService().delete(id, true);

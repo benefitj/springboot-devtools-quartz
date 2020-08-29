@@ -1,6 +1,5 @@
 package com.benefitj.devtoolsquartz.quartz.job;
 
-import com.benefitj.devtoolsquartz.quartz.task.QrtzJobTask;
 import com.benefitj.spring.ctx.SpringCtxHolder;
 import org.quartz.*;
 import org.slf4j.Logger;
@@ -18,10 +17,10 @@ public class JobTaskCaller implements Job {
     try {
       JobDetail detail = context.getJobDetail();
       JobDataMap jobDataMap = detail.getJobDataMap();
-      String taskId = jobDataMap.getString(QrtzJobTask.KEY_ID);
-      String worker = jobDataMap.getString(QrtzJobTask.KEY_WORKER);
+      String taskId = jobDataMap.getString(JobWorker.KEY_ID);
+      String worker = jobDataMap.getString(JobWorker.KEY_WORKER);
 
-      WorkerType workerType = WorkerType.of(jobDataMap.getString(QrtzJobTask.KEY_WORKER_TYPE));
+      WorkerType workerType = WorkerType.of(jobDataMap.getString(JobWorker.KEY_WORKER_TYPE));
       Object jobWorker = null;
       switch (workerType) {
         case NEW_INSTANCE:

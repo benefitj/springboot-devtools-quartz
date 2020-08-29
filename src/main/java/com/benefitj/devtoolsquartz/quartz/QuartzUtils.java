@@ -1,9 +1,9 @@
 package com.benefitj.devtoolsquartz.quartz;
 
 import com.benefitj.devtoolsquartz.quartz.job.JobType;
+import com.benefitj.devtoolsquartz.quartz.job.JobWorker;
 import com.benefitj.devtoolsquartz.quartz.job.WorkerType;
-import com.benefitj.devtoolsquartz.quartz.task.QrtzJobTask;
-import com.benefitj.devtoolsquartz.quartz.task.TriggerType;
+import com.benefitj.devtoolsquartz.model.QrtzJobTask;
 import com.benefitj.spring.ctx.SpringCtxHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.*;
@@ -57,10 +57,10 @@ public class QuartzUtils {
     jb.requestRecovery(task.getRecovery());
     // 不持久化
     jb.storeDurably(false);
-    jb.usingJobData(QrtzJobTask.KEY_ID, task.getId());
-    jb.usingJobData(QrtzJobTask.KEY_JOB_DATA, task.getJobData());
-    jb.usingJobData(QrtzJobTask.KEY_WORKER, task.getWorker());
-    jb.usingJobData(QrtzJobTask.KEY_WORKER_TYPE, task.getWorkerType());
+    jb.usingJobData(JobWorker.KEY_ID, task.getId());
+    jb.usingJobData(JobWorker.KEY_JOB_DATA, task.getJobData());
+    jb.usingJobData(JobWorker.KEY_WORKER, task.getWorker());
+    jb.usingJobData(JobWorker.KEY_WORKER_TYPE, task.getWorkerType());
     return jb;
   }
 

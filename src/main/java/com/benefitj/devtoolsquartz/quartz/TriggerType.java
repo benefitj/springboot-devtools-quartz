@@ -1,4 +1,4 @@
-package com.benefitj.devtoolsquartz.quartz.task;
+package com.benefitj.devtoolsquartz.quartz;
 
 import org.quartz.*;
 

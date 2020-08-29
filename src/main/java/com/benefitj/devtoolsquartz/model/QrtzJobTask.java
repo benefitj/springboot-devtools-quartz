@@ -1,26 +1,20 @@
-package com.benefitj.devtoolsquartz.quartz.task;
+package com.benefitj.devtoolsquartz.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.benefitj.devtoolsquartz.quartz.job.JobType;
 import com.benefitj.devtoolsquartz.quartz.job.WorkerType;
+import com.benefitj.devtoolsquartz.quartz.TriggerType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-@Entity
 @Table(name = "qrtz_job_task")
 public class QrtzJobTask implements Cloneable {
 
   public static final int TRIGGER_PRIORITY = 50;
-
-  public static final String KEY_ID = "id";
-  public static final String KEY_JOB_DATA = "jobData";
-  public static final String KEY_WORKER = "worker";
-  public static final String KEY_WORKER_TYPE = "workerType";
 
   /**
    * 任务id
@@ -95,7 +89,7 @@ public class QrtzJobTask implements Cloneable {
   /**
    * jobWorker的类型，参考：{@link WorkerType}
    */
-  @Column(name = "worker_type", columnDefinition = "varchar(20) comment 'jobWorker的类型'", length = 20)
+  @Column(name = "worker_type", columnDefinition = "varchar(50) comment 'jobWorker的类型'", length = 40)
   private String workerType;
   /**
    * Job携带的数据
